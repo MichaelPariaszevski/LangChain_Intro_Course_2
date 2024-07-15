@@ -3,7 +3,7 @@ import requests
 
 # twitter_client=tweepy.client("API Keys")
 
-def scrape_user_tweets(username, num_tweets=5, mock: bool=False): 
+def scrape_user_tweets(username, num_tweets=5, mock: bool=True): 
     """
     Scrapes a Twitter user's original tweets (i.e., not retweets or replies) and returns them as a list of dictionaries. 
     Each dictionary has three fields: "time posted" (relative to now), "text", and "url".
@@ -30,7 +30,7 @@ def scrape_user_tweets(username, num_tweets=5, mock: bool=False):
         for tweet in tweets.data: 
             tweet_dict={} 
             tweet_dict["text"]=tweet["text"] 
-            tweet_dict["url"]=f"https://twitter.com/{username}/status/(tweet.id)" 
+            tweet_dict["url"]=f"https://twitter.com/{username}/status/{tweet['id']}" 
 
             tweet_list.append(tweet_dict)
 
