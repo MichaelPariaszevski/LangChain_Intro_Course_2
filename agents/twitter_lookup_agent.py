@@ -50,7 +50,7 @@ def lookup_2(name: str) -> str: # The arrow here (->) is a return annotation for
         verbose=True
     )
 
-    result=agent_executor.invoke(input={"name_of_person": prompt_template.format_prompt(name_of_person=name)}) # Or use (input={"input": prompt_template.format_prompt(name_of_person=name)})
+    result=agent_executor.invoke(input={"input": prompt_template.format_prompt(name_of_person=name)}) # MUST USE (input={"input": prompt_template.format_prompt(name_of_person=name)})
 
     linked_profile_url=result["output"]
 
