@@ -4,7 +4,6 @@ from dotenv import load_dotenv, find_dotenv
 if __name__=="__main__": 
     print("Hello!")
     load_dotenv(find_dotenv(), override=True)
-    print(os.environ["OPENAI_API_KEY"])
 
 from langchain.prompts.prompt import PromptTemplate 
 from langchain_openai import ChatOpenAI 

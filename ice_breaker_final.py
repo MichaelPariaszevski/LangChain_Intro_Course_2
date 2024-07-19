@@ -4,10 +4,9 @@ from dotenv import load_dotenv, find_dotenv
 
 sys.path.append(os.getcwd())
 
-# if __name__=="__main__": 
-#     print("Hello!")
-#     load_dotenv(find_dotenv(), override=True)
-#     print(os.environ["OPENAI_API_KEY"])
+if __name__=="__main__": 
+    print("Hello!")
+    load_dotenv(find_dotenv(), override=True)
 
 from langchain.prompts.prompt import PromptTemplate 
 from langchain_openai import ChatOpenAI 
