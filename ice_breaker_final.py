@@ -51,7 +51,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
         },
     )
 
-    llm_new = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm_new = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
     chain_2 = summary_prompt_template_new | llm_new | summary_parser
 

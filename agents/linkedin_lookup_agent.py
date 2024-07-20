@@ -24,7 +24,7 @@ def lookup(
 ) -> (
     str
 ):  # The arrow here (->) is a return annotation for the function lookup(); more information about return annotations: https://stackoverflow.com/questions/14379753/what-does-mean-in-python-function-definitions
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+    llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
     template = """ 
     Given the full name {name_of_person}, I want you to get me a link to their Linkedin profile page. 

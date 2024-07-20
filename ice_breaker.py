@@ -31,7 +31,7 @@ summary_prompt_template = PromptTemplate(
     input_variables=["information"], template=summary_template
 )
 
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
 chain = LLMChain(llm=llm, prompt=summary_prompt_template, verbose=True)
 
@@ -51,7 +51,7 @@ summary_prompt_template_new = PromptTemplate(
     input_variables=["information"], template=summary_template_new
 )
 
-llm_new = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+llm_new = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
 chain_2 = summary_prompt_template_new | llm_new
 
