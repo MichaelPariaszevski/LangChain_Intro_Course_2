@@ -3,7 +3,7 @@ import os
 import tweepy
 import requests
 
-sys.path.append(os.getcwd())
+# sys.path.append(os.getcwd())
 
 # twitter_client=tweepy.client("API Keys")
 

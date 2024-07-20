@@ -6,7 +6,8 @@ sys.path.append(os.getcwd())
 
 if __name__ == "__main__":
     print("Hello!")
-    load_dotenv(find_dotenv(), override=True)
+    env_check=load_dotenv(find_dotenv(), override=True) 
+    print(env_check)
 
 from langchain.prompts.prompt import PromptTemplate
 from langchain_openai import ChatOpenAI
@@ -25,12 +26,12 @@ from typing import Tuple
 
 
 def ice_break_with_2(name: str) -> Tuple[Summary, str]:
-    linkedin_url = linkedin_lookup_agent(name=name)
+    linkedin_url = linkedin_lookup_agent(name=name) # This is an agent
     linkedin_data = scrape_linkedin_profile(
         linkedin_profile_url=linkedin_url, mock=True
     )
 
-    twitter_username = twitter_lookup_agent(name=name)
+    twitter_username = twitter_lookup_agent(name=name) # This is an agent
 
     tweets = scrape_user_tweets_no_duplicate_code(username=twitter_username, mock=True)
 
@@ -53,7 +54,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
 
     llm_new = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
-    chain_2 = summary_prompt_template_new | llm_new | summary_parser
+    chain_2 = summary_prompt_template_new | llm_new | summary_parser # This is a chain, not an agent
 
     output_new: Summary = chain_2.invoke(
         input={"linkedin_information": linkedin_data, "twitter_posts": tweets}
@@ -62,7 +63,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
     return output_new, linkedin_data.get("profile_pic_url")
 
 
-load_dotenv(find_dotenv(), override=True)
+# load_dotenv(find_dotenv(), override=True)
 
 print("Ice Breaker Enter 2")
 output, profile_pic_url = ice_break_with_2(

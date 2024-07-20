@@ -16,6 +16,11 @@ sys.path.append(
     os.getcwd()
 )  # THIS LINE IS NECESSARY FOR IMPORTING (from tools_folder.tools_file import get_profile_url_tavily) https://stackoverflow.com/questions/60593604/importerror-attempted-relative-import-with-no-known-parent-package
 
+# Also, make sure that since the import is from tools_folder.tools_file, the terminal where the code is being executed must be in the \LangChain_Ice_Breaker_Introduction\LangChain_Intro_Course_2 directory,
+# NOT \LangChain_Ice_Breaker_Introduction\ directory
+# OR we can use the from LangChain_Intro_Course_2.tools_folder.tools_file import along with the \LangChain_Ice_Breaker_Introduction directory
+# HOWEVER, the line, sys.path.append(os.getcwd()) is still necessary
+
 from tools_folder.tools_file import get_profile_url_tavily
 
 
