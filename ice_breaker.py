@@ -1,15 +1,15 @@
 import os
 from dotenv import load_dotenv, find_dotenv
 
-if __name__=="__main__": 
+if __name__ == "__main__":
     print("Hello!")
     load_dotenv(find_dotenv(), override=True)
 
-from langchain.prompts.prompt import PromptTemplate 
-from langchain_openai import ChatOpenAI 
+from langchain.prompts.prompt import PromptTemplate
+from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
 
-information="""
+information = """
 George Washington (February 22, 1732 – December 14, 1799) was an American Founding Father, military officer, and politician who served as the first president of the United States from 1789 to 1797. Appointed by the Second Continental Congress as commander of the Continental Army in 1775, Washington led Patriot forces to victory in the American Revolutionary War and then served as president of the Constitutional Convention in 1787, which drafted the current Constitution of the United States. Washington has thus become commonly known as the "Father of his Country".
 
 Washington's first public office, from 1749 to 1750, was as surveyor of Culpeper County in the Colony of Virginia. In 1752, he received military training and was granted the rank of major in the Virginia Regiment. During the French and Indian War, Washington was promoted to lieutenant colonel in 1754 and subsequently became head of the Virginia Regiment in 1755. He was later elected to the Virginia House of Burgesses and was named a delegate to the Continental Congress in Philadelphia, which appointed him commander-in-chief of the Continental Army. Washington led American forces to a decisive victory over the British in the Revolutionary War, leading the British to sign the Treaty of Paris, which acknowledged the sovereignty and independence of the United States. He resigned his commission in 1783 after the conclusion of the Revolutionary War.
@@ -21,37 +21,38 @@ Washington's image is an icon of American culture. He has been memorialized by m
 
 # The old method/way of creating chains
 
-summary_template="""
+summary_template = """
 Given the information: {information} about a person, I want you to create: 
 1. a short summary 
 2. two interesting facts about them
 """
 
-summary_prompt_template=PromptTemplate(input_variables=["information"], template=summary_template) 
+summary_prompt_template = PromptTemplate(
+    input_variables=["information"], template=summary_template
+)
 
-llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0) 
+llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
-chain=LLMChain(llm=llm, prompt=summary_prompt_template, verbose=True) 
+chain = LLMChain(llm=llm, prompt=summary_prompt_template, verbose=True)
 
-output=chain.invoke({"information": information}) 
+output = chain.invoke({"information": information})
 
 print(output)
 
-# The new method/way of creating chains 
+# The new method/way of creating chains
 
-summary_template_new="""
+summary_template_new = """
 Given the information: {information} about a person, I want you to create: 
 1. a short summary 
 2. two interesting facts about them
 """
 
-summary_prompt_template_new=PromptTemplate(
-    input_variables=["information"], 
-    template=summary_template_new
-    )
+summary_prompt_template_new = PromptTemplate(
+    input_variables=["information"], template=summary_template_new
+)
 
-llm_new=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0) 
+llm_new = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 
-chain_2=summary_prompt_template_new | llm_new
+chain_2 = summary_prompt_template_new | llm_new
 
 print(chain_2.invoke(input={"information": information}))
