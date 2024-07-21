@@ -16,8 +16,8 @@ from third_parties.linkedin import scrape_linkedin_profile
 
 from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 
-from agents.twitter_lookup_agent import lookup_2 as twitter_lookup_agent
-from third_parties.twitter import scrape_user_tweets_no_duplicate_code
+# from agents.twitter_lookup_agent import lookup_2 as twitter_lookup_agent
+# from third_parties.twitter import scrape_user_tweets_no_duplicate_code
 
 from Output_Parsers import summary_parser
 from Output_Parsers import Summary  # Summary is a class from Output_Parsers.py
@@ -25,18 +25,18 @@ from Output_Parsers import Summary  # Summary is a class from Output_Parsers.py
 from typing import Tuple
 
 
-def ice_break_with_2(name: str) -> Tuple[Summary, str]:
+def ice_break_with_3(name: str) -> Tuple[Summary, str]:
     linkedin_url = linkedin_lookup_agent(name=name)  # This is an agent
     linkedin_data = scrape_linkedin_profile(
         linkedin_profile_url=linkedin_url, mock=False
     )
 
-    twitter_username = twitter_lookup_agent(name=name)  # This is an agent
+    # twitter_username = twitter_lookup_agent(name=name)  # This is an agent
 
-    tweets = scrape_user_tweets_no_duplicate_code(username=twitter_username, mock=True)
+    # tweets = scrape_user_tweets_no_duplicate_code(username=twitter_username, mock=True)
 
     summary_template_new = """
-    Given the Linkedin information: {linkedin_information} about a person, and their latest twitter posts {twitter_posts}, I want you to create: 
+    Given the Linkedin information: {linkedin_information} about a person, I want you to create: 
     1. a short summary 
     2. two interesting facts about them
 
@@ -45,7 +45,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
     """
 
     summary_prompt_template_new = PromptTemplate(
-        input_variables=["linkedin_information", "twitter_posts"],
+        input_variables=["linkedin_information"],
         template=summary_template_new,
         partial_variables={
             "format_instructions": summary_parser.get_format_instructions()
@@ -58,9 +58,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
         summary_prompt_template_new | llm_new | summary_parser
     )  # This is a chain, not an agent
 
-    output_new: Summary = chain_2.invoke(
-        input={"linkedin_information": linkedin_data, "twitter_posts": tweets}
-    )
+    output_new: Summary = chain_2.invoke(input={"linkedin_information": linkedin_data})
 
     profile_pic = linkedin_data.get("profile_pic_url")
 
@@ -73,10 +71,10 @@ if (
     __name__ == "__main__"
 ):  # if __name__ == "__main__" is necessary here so that we can test/run the ice_break_with_2 function and see the output, but also so that when we import ice_break_with_2 from ice_breaker_final.py into app.py, the function call under if __name__ == "__main__" is not executed in app.py
     print("Ice Breaker Enter 2")
-    output, profile_pic_url = ice_break_with_2(
+    output, profile_pic_url = ice_break_with_3(
         name="Harrison Chase"
-    )  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2"), 
-       # Solved in linkedin_lookup_agent.py and in twitter_lookup_agent.py
+    )  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2"),
+    # Solved in linkedin_lookup_agent.py and in twitter_lookup_agent.py
     print(output)
     print("-" * 100)
     print(output.summary)
