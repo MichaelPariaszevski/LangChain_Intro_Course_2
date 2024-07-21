@@ -1,6 +1,6 @@
-import sys
-import os
-import tweepy
+# import sys
+# import os
+# import tweepy
 import requests
 
 # sys.path.append(os.getcwd())
@@ -24,18 +24,18 @@ def scrape_user_tweets(username, num_tweets=5, mock: bool = False):
             tweet_dict["text"] = tweet["text"]
             tweet_dict["url"] = f"https://twitter.com/{username}/status/{tweet['id']}"
             tweet_list.append(tweet_dict)
-    else:
-        user_id = twitter_client.get_user(username=username).data.id
-        tweets = twitter_client.get_users_tweets(
-            id=user_id, max_results=num_tweets, exclude=["retweets", "replies"]
-        )
+    # else:
+    #     user_id = twitter_client.get_user(username=username).data.id
+    #     tweets = twitter_client.get_users_tweets(
+    #         id=user_id, max_results=num_tweets, exclude=["retweets", "replies"]
+    #     )
 
-        for tweet in tweets.data:
-            tweet_dict = {}
-            tweet_dict["text"] = tweet["text"]
-            tweet_dict["url"] = f"https://twitter.com/{username}/status/{tweet['id']}"
+    #     for tweet in tweets.data:
+    #         tweet_dict = {}
+    #         tweet_dict["text"] = tweet["text"]
+    #         tweet_dict["url"] = f"https://twitter.com/{username}/status/{tweet['id']}"
 
-            tweet_list.append(tweet_dict)
+    #         tweet_list.append(tweet_dict)
 
     return tweet_list
 
@@ -48,14 +48,14 @@ def scrape_user_tweets_no_duplicate_code(username, num_tweets=5, mock: bool = Fa
     tweet_list = []
 
     if mock:
-        eden_twitter_gist = "https://gist.githubusercontent.com/emarco177/827323bb599553d0f0e662da07b9ff68/raw/57bf38cf8acce0c87e060f9bb51f6ab72098fbd6/eden-marco-twitter.json"
-        tweets = requests.get(eden_twitter_gist, timeout=5).json()
+        EDEN_TWITTER_GIST = "https://gist.githubusercontent.com/emarco177/827323bb599553d0f0e662da07b9ff68/raw/57bf38cf8acce0c87e060f9bb51f6ab72098fbd6/eden-marco-twitter.json"
+        tweets = requests.get(EDEN_TWITTER_GIST, timeout=5).json()
 
-    else:
-        user_id = twitter_client.get_user(username=username).data.id
-        tweets = twitter_client.get_users_tweets(
-            id=user_id, max_results=num_tweets, exclude=["retweets", "replies"]
-        )
+    # else:
+    #     user_id = twitter_client.get_user(username=username).data.id
+    #     tweets = twitter_client.get_users_tweets(
+    #         id=user_id, max_results=num_tweets, exclude=["retweets", "replies"]
+    #     )
 
         # tweets=tweets.data
 

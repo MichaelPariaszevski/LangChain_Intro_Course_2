@@ -1,6 +1,6 @@
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
-load_dotenv(find_dotenv(), override=True)
+load_dotenv()
 
 from flask import Flask, render_template, request, jsonify
 from ice_breaker_final import (
@@ -21,7 +21,7 @@ def process():
     summary, profile_pic_url = ice_break_with_2(name=name)
     return jsonify(
         {
-            "summary_and_facts": summary.to_dict(), # summary.to_dict() turns our summary object into a dictionary object for jsonify to use
+            "summary_and_facts": summary.to_dict(),  # summary.to_dict() turns our summary object into a dictionary object for jsonify to use
             "picture_url": profile_pic_url,
         }
     )
@@ -29,5 +29,5 @@ def process():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
-    
+
 # Issue when inputting a name and clicking "submit", the loading circle spins indefinitely (most likely because profile picture url is of a type that causes issues, cannot be opened/viewed)

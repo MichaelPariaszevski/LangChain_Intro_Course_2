@@ -1,8 +1,8 @@
-import os
-import sys
+# import os
+# import sys
 from dotenv import load_dotenv, find_dotenv
 
-sys.path.append(os.getcwd())
+# sys.path.append(os.getcwd())
 
 if __name__ == "__main__":
     print("Hello!")
@@ -19,8 +19,10 @@ from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 from agents.twitter_lookup_agent import lookup_2 as twitter_lookup_agent
 from third_parties.twitter import scrape_user_tweets_no_duplicate_code
 
-from Output_Parsers import summary_parser
-from Output_Parsers import Summary  # Summary is a class from Output_Parsers.py
+from Output_Parsers import (
+    summary_parser,
+    Summary,
+)  # Summary is a class from Output_Parsers.py
 
 from typing import Tuple
 
@@ -28,7 +30,8 @@ from typing import Tuple
 def ice_break_with_2(name: str) -> Tuple[Summary, str]:
     linkedin_url = linkedin_lookup_agent(name=name)  # This is an agent
     linkedin_data = scrape_linkedin_profile(
-        linkedin_profile_url=linkedin_url, mock=False
+        linkedin_profile_url=linkedin_url,
+        mock=False,
     )
 
     twitter_username = twitter_lookup_agent(name=name)  # This is an agent
@@ -58,7 +61,7 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
         summary_prompt_template_new | llm_new | summary_parser
     )  # This is a chain, not an agent
 
-    output_new: Summary = chain_2.invoke(
+    output_new = chain_2.invoke(
         input={"linkedin_information": linkedin_data, "twitter_posts": tweets}
     )
 
@@ -75,8 +78,8 @@ if (
     print("Ice Breaker Enter 2")
     output, profile_pic_url = ice_break_with_2(
         name="Harrison Chase"
-    )  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2"), 
-       # Solved in linkedin_lookup_agent.py and in twitter_lookup_agent.py
+    )  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2"),
+    # Solved in linkedin_lookup_agent.py and in twitter_lookup_agent.py
     print(output)
     print("-" * 100)
     print(output.summary)

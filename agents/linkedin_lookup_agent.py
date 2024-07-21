@@ -1,8 +1,8 @@
-import sys
-import os
-from dotenv import load_dotenv, find_dotenv
+# import sys
+# import os
+from dotenv import load_dotenv
 
-load_dotenv(find_dotenv(), override=True)
+load_dotenv()
 
 from langchain_openai import ChatOpenAI
 from langchain.prompts.prompt import PromptTemplate
@@ -12,9 +12,9 @@ from langchain import (
     hub,
 )  # Used to download pre-made prompts from the langchain team and the community
 
-sys.path.append(
-    os.getcwd()
-)  # THIS LINE IS NECESSARY FOR IMPORTING (from tools_folder.tools_file import get_profile_url_tavily) https://stackoverflow.com/questions/60593604/importerror-attempted-relative-import-with-no-known-parent-package
+# sys.path.append(
+#     os.getcwd()
+# )  # THIS LINE IS NECESSARY FOR IMPORTING (from tools_folder.tools_file import get_profile_url_tavily) https://stackoverflow.com/questions/60593604/importerror-attempted-relative-import-with-no-known-parent-package
 
 # Also, make sure that since the import is from tools_folder.tools_file, the terminal where the code is being executed must be in the \LangChain_Ice_Breaker_Introduction\LangChain_Intro_Course_2 directory,
 # NOT \LangChain_Ice_Breaker_Introduction\ directory
@@ -29,12 +29,13 @@ def lookup(
 ) -> (
     str
 ):  # The arrow here (->) is a return annotation for the function lookup(); more information about return annotations: https://stackoverflow.com/questions/14379753/what-does-mean-in-python-function-definitions
-    llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
+    llm = ChatOpenAI(
+        model_name="gpt-4o-mini",
+        temperature=0,
+    )
 
-    template = """ 
-    Given the full name {name_of_person}, I want you to get me a link to their Linkedin profile page. 
-    Your answer should contain ONLY a URL.
-    """
+    template = """ given the full name {name_of_person} I want you to get me a link to their Linkedin profile page. 
+    Your answer should contain ONLY a URL"""
 
     prompt_template = PromptTemplate(
         template=template, input_variables=["name_of_person"]
@@ -42,7 +43,7 @@ def lookup(
 
     tools_for_agent = [
         Tool(
-            name="Crawl Google for Linkedin Profile Page",
+            name="Crawl Google 4 Linkedin Profile Page",
             func=get_profile_url_tavily,
             description="Useful for when you need to get a Linkedin Page URL",
         )
@@ -62,10 +63,11 @@ def lookup(
 
     return linkedin_profile_url
 
-# The below print and function call HAVE TO BE COMMENTED OUT OR DELETED to solve the problem of the AgentExecutor Chain running twice in the file ice_breaker_final.py 
+
+# The below print and function call HAVE TO BE COMMENTED OUT OR DELETED to solve the problem of the AgentExecutor Chain running twice in the file ice_breaker_final.py
 # (the problem of the AgentExecutor Chain running twice occurred during the import of lookup from linkedin_lookup_agent and lookup_2 from twitter_lookup_agent)
 
-# print(lookup(name="Eden Marco")) 
+# print(lookup(name="Eden Marco"))
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     print(lookup(name="Harrison Chase"))

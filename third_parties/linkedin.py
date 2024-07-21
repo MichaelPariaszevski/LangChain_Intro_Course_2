@@ -1,9 +1,9 @@
 import os
-import sys
+# import sys
 import requests
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
-load_dotenv(find_dotenv(), override=True)
+load_dotenv()
 
 # sys.path.append(os.getcwd())
 
@@ -22,7 +22,7 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
         api_endpoint = "https://nubela.co/proxycurl/api/v2/linkedin"
         header_dic = {"Authorization": f"Bearer {os.environ.get('PROXYCURL_API_KEY')}"}
         response = requests.get(
-            api_endpoint, params={"url": linkedin_profile_url}, headers=header_dic
+            api_endpoint, params={"url": linkedin_profile_url}, headers=header_dic, timeout=10
         )
 
     data = response.json()
