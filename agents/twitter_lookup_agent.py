@@ -60,9 +60,11 @@ def lookup_2(
         input={"input": prompt_template.format_prompt(name_of_person=name)}
     )  # MUST USE (input={"input": prompt_template.format_prompt(name_of_person=name)})
 
-    linked_profile_url = result["output"]
+    twitter_username = result["output"]
 
-    return linked_profile_url
+    return twitter_username
 
+# The below print and function call HAVE TO BE COMMENTED OUT OR DELETED to solve the problem of the AgentExecutor Chain running twice in the file ice_breaker_final.py 
+# (the problem of the AgentExecutor Chain running twice occurred during the import of lookup from linkedin_lookup_agent and lookup_2 from twitter_lookup_agent)
 
-print(lookup_2("Eden Marco Udemy"))
+# print(lookup_2("Eden Marco Udemy"))

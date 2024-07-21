@@ -44,8 +44,9 @@ def scrape_linkedin_profile(linkedin_profile_url: str, mock: bool = False):
 
 
 if __name__ == "__main__":
-    print(
-        scrape_linkedin_profile(
+    output=scrape_linkedin_profile(
             linkedin_profile_url="https://www.linkedin.com/in/eden-marco/", mock=True
         )
-    )
+    print(output) 
+    print("-"*100)
+    print(output.get("profile_pic_url"))

@@ -62,5 +62,10 @@ def lookup(
 
     return linkedin_profile_url
 
+# The below print and function call HAVE TO BE COMMENTED OUT OR DELETED to solve the problem of the AgentExecutor Chain running twice in the file ice_breaker_final.py 
+# (the problem of the AgentExecutor Chain running twice occurred during the import of lookup from linkedin_lookup_agent and lookup_2 from twitter_lookup_agent)
 
-print(lookup(name="Eden Marco"))
+# print(lookup(name="Eden Marco")) 
+
+if __name__ == "__main__": 
+    print(lookup(name="Harrison Chase"))

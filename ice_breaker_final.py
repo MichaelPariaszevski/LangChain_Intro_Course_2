@@ -6,7 +6,7 @@ sys.path.append(os.getcwd())
 
 if __name__ == "__main__":
     print("Hello!")
-    env_check=load_dotenv(find_dotenv(), override=True) 
+    env_check = load_dotenv(find_dotenv(), override=True)
     print(env_check)
 
 from langchain.prompts.prompt import PromptTemplate
@@ -26,12 +26,12 @@ from typing import Tuple
 
 
 def ice_break_with_2(name: str) -> Tuple[Summary, str]:
-    linkedin_url = linkedin_lookup_agent(name=name) # This is an agent
+    linkedin_url = linkedin_lookup_agent(name=name)  # This is an agent
     linkedin_data = scrape_linkedin_profile(
         linkedin_profile_url=linkedin_url, mock=True
     )
 
-    twitter_username = twitter_lookup_agent(name=name) # This is an agent
+    twitter_username = twitter_lookup_agent(name=name)  # This is an agent
 
     tweets = scrape_user_tweets_no_duplicate_code(username=twitter_username, mock=True)
 
@@ -54,25 +54,32 @@ def ice_break_with_2(name: str) -> Tuple[Summary, str]:
 
     llm_new = ChatOpenAI(model_name="gpt-4o-mini", temperature=0)
 
-    chain_2 = summary_prompt_template_new | llm_new | summary_parser # This is a chain, not an agent
+    chain_2 = (
+        summary_prompt_template_new | llm_new | summary_parser
+    )  # This is a chain, not an agent
 
     output_new: Summary = chain_2.invoke(
         input={"linkedin_information": linkedin_data, "twitter_posts": tweets}
     )
 
-    return output_new, linkedin_data.get("profile_pic_url")
+    profile_pic = linkedin_data.get("profile_pic_url")
+
+    return output_new, profile_pic
 
 
 # load_dotenv(find_dotenv(), override=True)
 
-print("Ice Breaker Enter 2")
-output, profile_pic_url = ice_break_with_2(
-    name="Eden Marco"
-)  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2")
-print(output)
-print("-" * 100)
-print(output.summary)
-print("-" * 100)
-print(output.facts)
-print("-" * 100)
-print(profile_pic_url)
+if (
+    __name__ == "__main__"
+):  # if __name__ == "__main__" is necessary here so that we can test/run the ice_break_with_2 function and see the output, but also so that when we import ice_break_with_2 from ice_breaker_final.py into app.py, the function call under if __name__ == "__main__" is not executed in app.py
+    print("Ice Breaker Enter 2")
+    output, profile_pic_url = ice_break_with_2(
+        name="Harrison Chase"
+    )  # Runs each AgentExecutor chain twice (even before printing "Ice Breaker Enter 2")
+    print(output)
+    print("-" * 100)
+    print(output.summary)
+    print("-" * 100)
+    print(output.facts)
+    print("-" * 100)
+    print(profile_pic_url)
